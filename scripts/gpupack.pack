@@ -23,7 +23,16 @@ function Ectrans_clone ()
   pack=$1
   mkdir -p $pack/hub/local/src/Ectrans
   cd $pack/hub/local/src/Ectrans
-  git clone --branch mirror-CY48T3_mrg48R1.02 https://github.com/ACCORD-NWP/ectrans
+  #git clone --branch mirror-CY48T3_mrg48R1.02 https://github.com/ACCORD-NWP/ectrans
+  git clone --branch bonmergeoupas https://github.com/dareg/ectrans
+}
+
+function Etrans_clone ()
+{
+  pack=$1
+  mkdir -p $pack/hub/local/src/Etrans
+  cd $pack/hub/local/src/Etrans
+  git clone --branch gpu_daand_lam https://github.com/HaroldMTO/etrans
 }
 
 function OOPS_clone ()
@@ -81,7 +90,7 @@ function pack_create ()
 
   gitpack --init --repo $REPO --branch $BRANCH
 
-  for lib in ecSDK Fiat Ectrans OOPS FieldAPI 
+  for lib in ecSDK Fiat Ectrans OOPS FieldAPI Etrans
   do
     ${lib}_clone $PACK
   done
