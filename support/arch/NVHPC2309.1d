@@ -147,7 +147,7 @@ LNK_CC = $GPUPACK_PREFIX/support/wrap/$ARCH/cc -lrt -lstdc++
 # Fortran linking flags
 # ----------------------
 
-LNK_FLAGS = -acc=gpu -O1 -gopt -gpu=$GPU -v -lrt -lstdc++ -Wl,-rpath,$GPUPACK_PREFIX/install/$ARCH/lib
+LNK_FLAGS = -acc=gpu -O1 -gopt -gpu=$GPU -v -lrt -lstdc++ -cuda -lcufft -lcublas -Wl,-rpath,$GPUPACK_PREFIX/install/$ARCH/lib
 
 # Additional linking flags to LNK_FLAGS for c++ executable
 # --------------------------------------------------------
@@ -292,7 +292,9 @@ LD_USR_PARKIND = parkind_dp
 # fiat :
 LD_USR_FIAT = fiat
 # ectrans :
-LD_USR_ECTRANS = trans_dp
+LD_USR_ECTRANS = trans_gpu_dp
+# ectrans own's libgpu
+LD_USR_GPU = gpu
 # field_api :
 LD_USR_FIELD_API = field_api_dp
 # etrans :
