@@ -3,7 +3,21 @@
 set -x
 set -e
 
-export GPUPACK_PREFIX=$HOME/gpupack
+export GPUPACK_PREFIX=$HOME/gpupack_etrans_ectrans_gpu
+
+# Choose a compiler
+
+ARCH=NVHPC2309
+
+# Pick a cycle & a branch
+
+CYCLE=49t0
+BRANCH=openacccpglagstack84
+REPO=https://github.com/pmarguinaud/IAL.git
+
+# Choose architecture flavor
+
+OPT=1d
 
 cd $GPUPACK_PREFIX
 
@@ -27,29 +41,14 @@ common_install
 
 common_check_versions
 
-# Choose a compiler
-
-ARCH=NVHPC2309
-
 # Install architecture dependent libraries
 
 libraries_install  
-
-# Pick a cycle & a branch
-
-CYCLE=49t0
-BRANCH=openacccpglagstack84
-REPO=https://github.com/pmarguinaud/IAL.git
-
-# Choose architecture flavor
-
-OPT=1d
-
 # Create a pack
 
 pack_create 
 
 # Compile the pack
 
-pack_compile
+#pack_compile
 
