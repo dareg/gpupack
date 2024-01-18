@@ -3,7 +3,7 @@
 set -x
 set -e
 
-export GPUPACK_PREFIX=$HOME/gpupack_etrans_ectrans_gpu
+export GPUPACK_PREFIX=$HOME/gpupack
 
 # Choose a compiler
 
@@ -44,6 +44,7 @@ common_check_versions
 # Install architecture dependent libraries
 
 libraries_install  
+
 # Create a pack
 
 pack_create 

@@ -11,7 +11,10 @@ export PATH=\$GPUPACK_PREFIX/install/common/fypp/bin:\$GPUPACK_PREFIX/install/co
 export ROOTPACK=\$GPUPACK_PREFIX/pack
 export HOMEPACK=\$GPUPACK_PREFIX/pack
 export GMK_SUPPORT=\$GPUPACK_PREFIX/support
-source \$GPUPACK_PREFIX/support/wrap/$ARCH/env.sh
+if [ -f \$GPUPACK_PREFIX/support/wrap/$ARCH/env.sh ]
+then
+	source \$GPUPACK_PREFIX/support/wrap/$ARCH/env.sh
+fi
 
 EOF
 
