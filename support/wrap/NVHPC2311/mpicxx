@@ -40,4 +40,4 @@ my @mpi_libs = ("-L$NVHPC_PREFIX/$OMPI_PREFIX/lib", "-Wl,-rpath,$NVHPC_PREFIX/$O
 
 exec ("$NVHPC_PREFIX/$OMPI_PREFIX/bin/mpic++", @ARGV, 
       "-L$NVHPC_PREFIX/compilers/lib", "-Wl,-rpath,$NVHPC_PREFIX/compilers/lib", '-lnvf', '-lnvhpcatm', @mpi_libs, 
-      "-L$NVHPC_PREFIX/$CUDA_PREFIX/targets/x86_64-linux/lib", "-Wl,-rpath,$NVHPC_PREFIX/$CUDA_PREFIX/targets/x86_64-linux/lib", '-lnvhpcwrapnvtx', '-lnvToolsExt');
+      "-L$NVHPC_PREFIX/$CUDA_PREFIX/targets/x86_64-linux/lib", "-Wl,-rpath,$NVHPC_PREFIX/$CUDA_PREFIX/targets/x86_64-linux/lib", '-lnvhpcwrapnvtx', '-lnvToolsExt', "-L/$NVHPC_PREFIX/math_libs/lib64");

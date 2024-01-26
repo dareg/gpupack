@@ -24,7 +24,7 @@ sub meteofrance
   return 1 if ($host =~ m/^(?:belenos|taranis)/o);
 }
 
-my $NVHPC_PREFIX = &prefix () . '/nvidia/hpc_sdk/Linux_x86_64/23.9';
+my $NVHPC_PREFIX = &prefix () . '/nvidia/hpc_sdk/Linux_x86_64/23.11';
 my $OMPI_PREFIX = "comm_libs/11.8/hpcx/hpcx-2.14/ompi";
 my $CUDA_PREFIX= "cuda/11.8";
 
@@ -47,6 +47,6 @@ my @cmd =
        ("$NVHPC_PREFIX/$OMPI_PREFIX/bin/mpicc", @ARGV, 
       "-L$NVHPC_PREFIX/compilers/lib", "-Wl,-rpath,$NVHPC_PREFIX/compilers/lib", '-lnvhpcatm',
       "-L$NVHPC_PREFIX/$CUDA_PREFIX/targets/x86_64-linux/lib", "-Wl,-rpath,$NVHPC_PREFIX/$CUDA_PREFIX/targets/x86_64-linux/lib", '-lnvhpcwrapnvtx', '-lnvToolsExt', '-lnvf',
-      "-L$NVHPC_PREFIX/$OMPI_PREFIX/lib", "-Wl,-rpath,$NVHPC_PREFIX/$OMPI_PREFIX/lib", '-lopen-rte', '-lopen-pal');
+      "-L$NVHPC_PREFIX/$OMPI_PREFIX/lib", "-Wl,-rpath,$NVHPC_PREFIX/$OMPI_PREFIX/lib", '-lopen-rte', '-lopen-pal', "-L/$NVHPC_PREFIX/math_libs/lib64");
 
 exec (@cmd);
