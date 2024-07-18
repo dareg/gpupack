@@ -61,9 +61,9 @@ if [ ! "$GMK_CMAKE" ] ; then
 elif [ "$GMK_CMAKE" = "cmake" ] ; then
   GMK_CTEST=ctest
 else
-  CTESTDIRNAME=$(dirname $GMK_CMAKE)
+  CTESTDIRNAME=$(dirname $(which $GMK_CMAKE))
 # I expect such adaptation as 'cmake3' to be interpreted as ctest to be replaced by ctest3
-  CTESTBASENAME=$(echo $(basename $GMK_CMAKE) | sed "s/cmake/ctest/")
+  CTESTBASENAME=$(echo $(basename $(which $GMK_CMAKE)) | sed "s/cmake/ctest/")
   if [ "$CTESTDIRNAME" ] ; then
     GMK_CTEST=$CTESTDIRNAME/$CTESTBASENAME
   else

@@ -1,0 +1,737 @@
+<!-- Creator     : groff version 1.22.2 -->
+<!-- CreationDate: Thu May 30 13:06:55 2024 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>gmkpack</title>
+
+</head>
+<body>
+
+<h1 align="center">gmkpack</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#ENVIRONNEMENT">ENVIRONNEMENT</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#FILES">FILES</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">gmkpack &minus;
+Maker of packs and scripts for compilation</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>gmkpack
+-r</b> <i>release</i> [ <b>-a</b> ] [ <b>-b</b>
+<i>branch</i> ] <b>-u</b> <i>target-pack</i> ] <br>
+[ <b>-v</b> <i>reference-pack-version</i> ] [ <b>-n</b>
+<i>local-pack-version</i> ] <br>
+[ <b>-l</b> <i>compiler-label</i> ] [ <b>-o</b>
+<i>compiling-flag</i> ] [ <b>-V</b> ] [ <b>-m</b> ] <br>
+[ <b>-f</b> <i>rootpack</i> ] [ <b>-h</b> <i>homepack</i> ]
+[ <b>-s</b> ] [ <b>-K</b> ] [ <b>-k</b> ] <br>
+[ <b>-p</b> <i>program1[,program2]...[,programN] | listname
+| ?</i> ]</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>gmkpack</b>
+is a procedure to create an environment and to compile
+binaries like Arpege, Aladin, ODB, etc. <br>
+While it is similar to a <b>make,</b> it has been written in
+order to support specific features of the arpege/aladin
+system (like the so-called &quot;duplicated routines&quot;)
+that a <b>make</b> could not handle. <b><br>
+gmkpack</b> aims to be a user-friendly
+arpege/aladin-oriented procedure, providing the user with
+all the links to object libraries and source codes needed to
+build an executable in a consistent way.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Prior to using
+<b>gmkpack</b> one should be aware of a few definitions:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="6%">
+
+
+<p>Pack</p></td>
+<td width="5%"></td>
+<td width="78%">
+
+
+<p>To compile one should copy the compilable source files
+and possibly other various files in a directory.</p></td></tr>
+</table>
+
+<p style="margin-left:22%;">This directory is named a
+&quot;pack&quot;. <br>
+A pack is a directory containing specific subdirectories and
+files that will all be created by running <b>gmkpack</b>.
+Below this directory, source code can be compiled, object
+libraries resulting from the compilation are built and
+executables can be made from this libraries and others. <br>
+The use of arpege/aladin is made complicated by the need of
+various &quot;include&quot; files, modules, libraries and
+sometimes a pre-compiler (for odb) to achieve an executable.
+<b>gmkpack</b> takes care and provides all this environment
+in a consistent way. This consistency is ensured by the
+definition of the reference release, the reference branch
+name and its version, the compilation mode and the compiler
+version (these parameters will be described below). More
+generally, we can try to define a pack as follows: <br>
+A pack is a consistent ensemble of source files, libraries
+and executables related to arpege/aladin. <b><br>
+gmkpack</b> is used for two operations: <br>
++ First : to create a &quot;pack&quot;. <br>
++ Second : to generate a script to compile, build object
+libraries andor make binaries, using the corresponding pack.
+<br>
+Note that both operations can be performed at once.</p>
+
+<p style="margin-left:11%;">gmkpack administrator</p>
+
+<p style="margin-left:22%;">A gmkpack administrator is a
+user who has installed <b>gmkpack</b> in his home directory
+for a private use or a shared use with other users. <br>
+Anyone can be his own gmkpack manager, but usually the
+gmkpack manager is a an administrator user.</p>
+
+<p style="margin-left:11%;">Pack administrator</p>
+
+<p style="margin-left:22%;">A pack administrator is a user
+who has created packs to be used by other users as bases for
+developments. <br>
+Anyone can be his own pack administrator, but usually the
+pack administrator is the user in charge with the code
+management.</p>
+
+<p style="margin-left:11%;">Main pack</p>
+
+<p style="margin-left:22%;">A pack which does not lay upon
+any existing pack. Such packs could be made by pack
+administrators only.</p>
+
+<p style="margin-left:11%;">Reference pack</p>
+
+<p style="margin-left:22%;">A pack upon which one can make
+another pack. Main packs are obviously reference packs.</p>
+
+<p style="margin-left:11%;">Target pack</p>
+
+<p style="margin-left:22%;">A pack laying upon an existing
+reference pack.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>-r</b>
+<i>release</i></p>
+
+<p style="margin-left:22%;">Reference release. This option
+is mandatory. <br>
+For user packs, the already existing releases made by the
+pack administrator can be obtained by the command
+<b>rlspack</b>. <br>
+For main packs, it should be a string of digits.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="12%"></td>
+<td width="3%">
+
+
+<p><b>-a</b></p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p>To build a main pack and/or a script for a main pack.
+The mechanism of <b>gmkpack</b> is slightly different for
+main packs since it has no pack to refer to.</p></td></tr>
+</table>
+
+<p style="margin-left:22%;">Note that the options <b>-a</b>
+and (<b>-u</b>,<b>-v</b>) are exclusive.</p>
+
+<p style="margin-left:11%;"><b>-b</b> <i>branch</i></p>
+
+<p style="margin-left:22%;">The branch name of the
+reference pack. It can be a string of any characters except
+dot (&quot;.&quot;) and slash (&quot;/&quot;). Default is
+&quot;main&quot; (for main pack).</p>
+
+<p style="margin-left:11%;"><b>-u</b>
+<i>target-pack</i></p>
+
+<p style="margin-left:22%;">For a user pack, it is the name
+of the target pack. Since such a target pack can be a
+subdirectory of a directory of packs, the target pack name
+may contain a slash (&quot;/&quot;). <br>
+If not supplied the default name will be the same as the
+reference pack. <br>
+For a reference pack (when the user is administrator), it is
+the branch name of the target pack. In this case this option
+is mandatory. <br>
+Note that options <b>-u</b> and <b>-a</b> are exclusive.</p>
+
+<p style="margin-left:11%;"><b>-v</b>
+<i>reference-pack-version</i></p>
+
+<p style="margin-left:22%;">Version number of the reference
+pack. It should be a string of exactly two digits. If
+omitted, it will be self-computed as the highest existing
+version number for the selected branch and release. <br>
+Note that options <b>-v</b> and <b>-a</b> are exclusive.</p>
+
+<p style="margin-left:11%;"><b>-n</b>
+<i>local-pack-version</i></p>
+
+<p style="margin-left:22%;">Version number of the target
+pack. This option works only for reference packs (when the
+user is administrator). It should be either a string of
+exactly two digits, or the string &rsquo;++&rsquo; ; in this
+case it will be self-computed as the highest existing
+version number for the selected branch and release,
+incremented with 1. If omitted, it will be self-computed as
+the highest existing version number for the selected branch
+and release.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="12%"></td>
+<td width="3%">
+
+
+<p><b>-K</b></p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p>Use this option to create a local hub. A hub is a
+separate directory where third-party packages can be built
+and installed with their own scripts (configure/make,
+cmake). Then the installed packages can be used to build the
+current source code. This option should be mostly used for
+main packs. Should a user create a pack containing a hub,
+then this subsequent pack will naturally inherit of that hub
+and the installed packages inside.</p></td></tr>
+</table>
+
+<p style="margin-left:22%;">This version of <b>gmkpack</b>
+supports cmake-built packages, but more methods can be
+implemented.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="12%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em"><b>-k</b></p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em">Use this option to disable the
+creation of source code. This option can be used together
+with <b>-K</b> to create a hub only. From a hub-only main
+pack, on can derive a user pack with a source code.</p></td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>-l</b>
+<i>compiler-label</i></p>
+
+<p style="margin-left:22%;">Reference compiler version.
+More exactly, it is the internal stamp of the configuration
+file used. The possible values are given by the command
+<b>optionspack</b>. There is no default value unless the
+environment variable GMKFILE is set.</p>
+
+<p style="margin-left:11%;"><b>-o</b>
+<i>compiling-flag</i></p>
+
+<p style="margin-left:22%;">Compiler options family. More
+exactly, it is the extension of the configuration file used.
+The possible values are given by the command
+<b>optionspack</b>. The default value is
+&rsquo;x&rsquo;.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="12%"></td>
+<td width="3%">
+
+
+<p><b>-V</b></p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p>Displays the version of <b>gmkpack</b>. This option is
+exclusive.</p> </td></tr>
+<tr valign="top" align="left">
+<td width="12%"></td>
+<td width="3%">
+
+
+<p><b>-m</b></p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p>Quiet mode. Enables to make a compilation script without
+making a pack. This option as been used for debugging
+only.</p> </td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>-f</b> <i>rootpack</i></p>
+
+<p style="margin-left:22%;">Rootpack directory (absolute
+path). The default value is ROOTPACK, or
+<i>$HOME/rootpack</i> if ROOTPACK is not set.</p>
+
+<p style="margin-left:11%;"><b>-h</b> <i>homepack</i></p>
+
+<p style="margin-left:22%;">Homepack directory (absolute
+path). The default value is HOMEPACK, or <i>$HOME/pack</i>
+if HOMEPACK is not set.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="12%"></td>
+<td width="3%">
+
+
+<p><b>-s</b></p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p>To make a separate script for building the precompilers
+provided as source code.</p></td></tr>
+</table>
+
+<p style="margin-left:22%;">This option is rather used for
+debugging purpose, since the current compilation script is
+able to handle as well the compilation of the precompilers
+prior to the actual source code compilation. <br>
+As the precompilers are built only inside main packs, this
+option can be used only with the option <b>-a</b> .</p>
+
+<p style="margin-left:11%;"><b>-p</b>
+<i>program1[,program2]...[,programN] | listname | ?</i></p>
+
+<p style="margin-left:22%;">The list of program to be
+built, or the name of a list of programs, or the character
+&quot;?&quot; to build as many executables as possible. <br>
+The list of the possible programs, and the possible lists
+and what programs they contain can be obtain with the
+command <i>progpack</i>.</p>
+
+<h2>ENVIRONNEMENT
+<a name="ENVIRONNEMENT"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">ROOTPACK</p>
+
+<p style="margin-left:22%;">The directory of packs made by
+the packs administrator (absolute path). Its value should be
+given by the pack administrator. The default value is
+<i>$HOME/rootpack</i></p>
+
+<p style="margin-left:11%;">HOMEPACK</p>
+
+<p style="margin-left:22%;">The directory of packs made by
+the user (absolute path). The default value is
+<i>$HOME/pack</i></p>
+
+<p style="margin-left:11%;">ROOTBIN</p>
+
+<p style="margin-left:22%;">The root directory for
+executables of all reference packs. It enables to store
+executables in another file system (larger and possibly
+semi-permanent). <br>
+More exactly the directory
+<i>$ROOTPACK/&lt;packname&gt;/bin</i> where the executables
+are stored is a symbolic link to the directory
+<i>$ROOTBIN/&lt;packname&gt;/bin</i></p>
+
+<p style="margin-left:11%;">HOMEBIN</p>
+
+<p style="margin-left:22%;">The root directory for
+executables of all user packs. It enables to store
+executables in another file system (larger and possibly
+semi-permanent). <br>
+More exactly the directory
+<i>$HOMEPACK/&lt;packname&gt;/bin</i> where the executables
+are stored is a symbolic link to the directory
+<i>$HOMEBIN/&lt;packname&gt;/bin</i></p>
+
+<p style="margin-left:11%;">ROOTLIB</p>
+
+<p style="margin-left:22%;">The root directory for
+libraries of all reference packs. It enables to store
+libraries in another file system (larger and permanent).
+<br>
+More exactly the directory
+<i>$ROOTPACK/&lt;packname&gt;/lib</i> where the libraries
+are stored is a symbolic link to the directory
+<i>$ROOTLIB/&lt;packname&gt;/lib</i></p>
+
+<p style="margin-left:11%;">HOMELIB</p>
+
+<p style="margin-left:22%;">The root directory for
+libraries of all user packs. It enables to store libraries
+in another file system (larger and permanent). <br>
+More exactly the directory
+<i>$HOMEPACK/&lt;packname&gt;/lib</i> where the libraries
+are stored is a symbolic link to the directory
+<i>$HOMELIB/&lt;packname&gt;/lib</i></p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p>GMKTMP</p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>A temporary directory. For optimal performance, it is
+recommended to use a local disk space.</p></td></tr>
+</table>
+
+<p style="margin-left:11%;">GMKFILE</p>
+
+<p style="margin-left:22%;">The basename of the
+configuration file used to run <b>gmkpack</b>. It contains
+all the variables needed to configure the usage of this
+command. <br>
+For developers, its value should be provided by the
+<b>gmkpack</b> administrator. If not defined, the use of the
+option <b>-l</b> of <b>gmkpack</b> is mandatory. Use the
+command <i>optionspack</i> to get the list of existing
+configurations.</p>
+
+<p style="margin-left:11%;">GMK_OPT</p>
+
+<p style="margin-left:22%;">The extension name of the
+configuration file used to run <b>gmkpack</b>. The default
+value is &rsquo;x&rsquo;. Use the command <i>optionspack</i>
+to get the list of existing options.</p>
+
+<p style="margin-left:11%;">GMK_ALIASES</p>
+
+<p style="margin-left:22%;">If set to any string, whenever
+a user creates a new pack, <b>gmkpack</b> will add the name
+of this new pack as an alias in the shell <i>rc</i> file to
+change directory to this new pack directory at once.
+Symetrically, <b>rmpack</b> will remove this alias.</p>
+
+<p style="margin-left:11%;">GMK_ENABLE_OBJ_RENAME</p>
+
+<p style="margin-left:22%;">If set to any string, at
+linking time <b>gmkpack</b> will rename object files
+containing a unique symbol so that they will reflect the
+name of the symbol inside. In certain cases it could be
+worth setting this variable, but it will slow down the
+linking step. If this variable can solve a linking problem,
+you should better try and change the source code !</p>
+
+<p style="margin-left:11%;">GMK_IMPORT_PLUGIN</p>
+
+<p style="margin-left:22%;">The external script (plug-in)
+run by <b>gmkpack</b> to import source code while creating a
+main pack. <br>
+Such a script can be written by packs administrators. It
+works only with reference packs.</p>
+
+<p style="margin-left:11%;">GMK_SUPPORT</p>
+
+<p style="margin-left:22%;">The directory of support files
+to run <b>gmkpack</b> (wrappers, configuration files,
+external scripts).</p>
+
+<p style="margin-left:11%;">PACK_PREFIX</p>
+
+<p style="margin-left:22%;">The prefix of pack names.</p>
+
+<p style="margin-left:11%;">PACK_EXT</p>
+
+<p style="margin-left:22%;">The suffix of pack names.</p>
+
+<p style="margin-left:11%;">GMK_IGNORE_MULTINAME</p>
+
+<p style="margin-left:22%;">export this variable to any
+non-empty string to prevent <b>gmkpack</b> from aborting
+when more than one symbol of the same name is found inside a
+library (main entries are ignored anyway).</p>
+
+<p style="margin-left:11%;">GMK_INTFBMODULE_LIB</p>
+
+<p style="margin-left:22%;">export this variable to any
+non-empty string to make <b>gmkpack</b> fill the
+&quot;unsatisfied reference&quot; archive library with
+object files resulting from the compilation of autogenerated
+interfaces encapsulated inside a module. This may be needed
+to achieve linking edition with certain compilers.</p>
+
+<p style="margin-left:11%;">GMK_TIMER</p>
+
+<p style="margin-left:22%;">The command used to count the
+compile time of each file. Default is /usr/bin/time</p>
+
+<p style="margin-left:11%;">GMK_USER_PACKNAME_STYLE</p>
+
+<p style="margin-left:22%;">Style used to construct the
+user pack names. <br>
+If not set, the default is equivalent to : <br>
+
+&quot;GMK_USER_PACKNAME_STYLE=\${RELATIVE_TARGET_PACK}&quot;
+<br>
+(NB : The backslashes are important !) <br>
+The following variables can be used to build a more complex
+name : <br>
+RELEASE_NUMBER : reference release number <br>
+RELEASE : reference release, including the prefix if any
+<br>
+BRANCH : reference branch name <br>
+LATEST : reference branch version <br>
+RELATIVE_TARGET_PACK : user pack short name <br>
+LIBFRT : compiler stamp <br>
+LIBOPT : compiler options stamp <br>
+PACK_EXT : suffix <br>
+Examples : <br>
+- Sort packs in one directory per release : <br>
+GMK_USER_PACKNAME_STYLE= <br>
+\${RELEASE_NUMBER}/\${RELATIVE_TARGET_PACK} <br>
+- Extensive information on name : <br>
+GMK_USER_PACKNAME_STYLE= <br>
+
+\${RELEASE}_\${BRANCH}.\${LATEST}%\${RELATIVE_TARGET_PACK}.\${LIBFRT}.\${LIBOPT}\${PACK_EXT}
+<br>
+- Paste the root pack name after the user pack name : <br>
+GMK_USER_PACKNAME_STYLE= <br>
+
+\${RELATIVE_TARGET_PACK}@\${RELEASE}_\${BRANCH}.\${LATEST}.\${LIBFRT}.\${LIBOPT}\${PACK_EXT}</p>
+
+<p style="margin-left:11%;">GMKROOT</p>
+
+<p style="margin-left:22%;">The directory where
+<b>gmkpack</b> is installed.</p>
+
+<h2>EXAMPLES
+<a name="EXAMPLES"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The following
+command builds an empty reference pack (hub and source code)
+from scratch, where the release number is 12 and with a
+script to compile, build archive object libraries, but
+without making executables :</p>
+
+<p style="margin-left:22%; margin-top: 1em">(. berootpack)
+<br>
+gmkpack -a -K -r 12</p>
+
+<p style="margin-left:11%; margin-top: 1em">The following
+command builds an empty reference pack named
+&rsquo;bugfix&rsquo; on top of the main pack defined above,
+together with a script to compile and make the executables
+ARPEGE, ALADIN and AROME (note that this operation cannot be
+perfomed before the total achievement of the reference pack
+above) :</p>
+
+<p style="margin-left:22%; margin-top: 1em">(. berootpack)
+<br>
+gmkpack -r 12 -u bugfix -p arpege,aladin,arome</p>
+
+<p style="margin-left:11%; margin-top: 1em">The following
+command builds a user pack named &rsquo;mymods&rsquo; on top
+of the pack &rsquo;bugfix&rsquo; defined above, together
+with a script to compile and make all possible executables
+:</p>
+
+<p style="margin-left:22%; margin-top: 1em">(. behomepack)
+<br>
+gmkpack -r 12 -u mymods -b bugfix -p ?</p>
+
+<h2>FILES
+<a name="FILES"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em">$GMK_SUPPORT/arch/</p>
+
+<p style="margin-left:22%;">Directory containing the
+configuration files which can be used by <b>gmkpack</b>
+(compilers, compilers options mainly).</p>
+
+<p style="margin-left:11%;">$HOME/.gmkpack/arch/</p>
+
+<p style="margin-left:22%;">The user-private directory
+where to add more configuration files for <b>gmkpack</b></p>
+
+<p style="margin-left:11%;">$GMK_SUPPORT/wrapper/</p>
+
+<p style="margin-left:22%;">Directory containing wrappers
+to compilers or such commands, to be developped or
+customized be the administrator.</p>
+
+<p style="margin-left:11%;">$GMK_SUPPORT/bin/</p>
+
+<p style="margin-left:22%;">Directory containing
+miscellaneous scripts, like plugins, to be developped or
+customized be the administrator.</p>
+
+<p style="margin-left:11%;">$GMKROOT/link/*</p>
+
+<p style="margin-left:22%;">The directory of configuration
+files specific for each possible executable.</p>
+
+<p style="margin-left:11%;">$GMKROOT/link/*/entry</p>
+
+<p style="margin-left:22%;">File containing the name of the
+entry point. It can be a single object filename, or a list
+of object filename (which will be loaded ahead). Wild
+characters are allowed. Non-existent object filenames are
+allowed.</p>
+
+<p style="margin-left:11%;">$GMKROOT/link/*/projlist</p>
+
+<p style="margin-left:22%;">File containing the list of
+projects (and thus user libraries) needed to link the
+executable. The projects are sorted from top to bottom like
+the subsequent user libraries should be linked (from first
+to last), before the system libraries. Non-existent projects
+are allowed.</p>
+
+<p style="margin-left:11%;">$GMKROOT/link/*/dummylist</p>
+
+<p style="margin-left:22%;">File containing the list of
+dummy projects (and thus dummy user libraries) needed to
+link the executable. The dummy projects are sorted from top
+to bottom like the subsequent user libraries should be
+linked (from first to last), before the system libraries.
+Non-existent projects are allowed.</p>
+
+<p style="margin-left:11%;">$GMKROOT/link/*/ldflags</p>
+
+<p style="margin-left:22%;">File containing on the first
+line the name of the loader (as a configuration variable
+name), and on the second line the loading flags sequence (as
+a configuration variable name).</p>
+
+
+<p style="margin-left:11%;">$GMKROOT/link/*/system_libs</p>
+
+<p style="margin-left:22%;">File containing the list of
+system libraries (as configuration variables names) needed
+to link the executable. The libraries are sorted from top to
+bottom like they should be linked (from first to last),
+after the user libraries.</p>
+
+
+<p style="margin-left:11%;">$GMKROOT/link/*/excluded_libs/*</p>
+
+<p style="margin-left:22%;">For each project if present:
+the list of the stamps corresponding to the sub-libraries to
+be excluded while linking.</p>
+
+<p style="margin-left:11%;">$GMKROOT/link/*/blacklist</p>
+
+<p style="margin-left:22%;">File containing the name of the
+blacklist file used at linking time. If no blacklist file is
+needed, it can be an empty file.</p>
+
+<p style="margin-left:11%;">$HOME/.gmkpack/link/*</p>
+
+<p style="margin-left:22%;">The user-private directory
+where to add configuration files for new executables.</p>
+
+<p style="margin-left:11%;">$GMKROOT/intfb/*</p>
+
+<p style="margin-left:22%;">For each project if present:
+the release since when the auto-generated interface blocks
+have been used.</p>
+
+<p style="margin-left:11%;">$GMKROOT/libs/*/*</p>
+
+<p style="margin-left:22%;">For each project if present
+($GMKROOT/libs/*): the sub-libraries stamps as files
+containing the list of the sub-directories serving each
+sub-library.</p>
+
+<p style="margin-left:11%;">$GMKROOT/home/exenames</p>
+
+<p style="margin-left:22%;">The file containing the name of
+each executable. To be used as a starting point for
+customization.</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Ryad El Khatib
+&lt;ryad.elkhatib@meteo.fr&gt;</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>admpack(1),
+behomepack(1), berootpack(1), brushpack(1), envpack(1),
+cleanpack(1), genpack(1), gmkfilemaker(1), idotpack(1),
+lockpack(1), logpack(1), lspack(1), mpsh(1), optionspack(1),
+progpack(1), readpack(1), resetpack(1), rlspack(1),
+rmpack(1), scanpack(1), showpack(1), usrpack(1),
+vimpack(1).</b></p>
+<hr>
+</body>
+</html>

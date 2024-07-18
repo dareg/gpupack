@@ -31,10 +31,12 @@ MyTmp=$GMKWRKDIR/dummylibspack
 mkdir -p $MyTmp
 #
 cd $MyTmp
-
 target=$(uname -s | tr '[A-Z]' '[a-z]')
+# for the projects present in this pack :
+#      THIS LOOP COULD BE MADE PARALLEL ONE OF THESE DAYS
 for project in $(eval echo $ICS_PROJLIBS) ; do
-  if [ -s $GMKROOT/dummy/$project ] ; then
+# restrict to known projects inside gmkpack and actually used dummy libs :
+  if [ -s $GMKROOT/dummy/$project ] && [ $(cat $GMKROOT/link/*/dummylist | sort -u | grep -c "$project") -ne 0 ] ; then
     find . -name "*" -type f -exec \rm -f {} \;
     mylib=libdummy${project}.${GMKLOCAL}.a
     for dir in $(cat $GMKROOT/dummy/$project) ; do
@@ -70,7 +72,7 @@ for project in $(eval echo $ICS_PROJLIBS) ; do
 #     Compile and update archive
       echo "update $mylib :"
       \rm archive_signal
-      find . -name "*.c" -print | xargs $VCCNAME $(eval echo $VCCFLAGS $OPT_VCCFLAGS)
+      find . -name "*.c" -print | xargs $VCCNAME $(eval echo $VCCFLAGS)
       if [ "$target" = "darwin" ] ; then
         find . -name "*.o" -print | xargs $AR -cqvS $MKLIB/$mylib
         if [ -f $MKLIB/$mylib ] ; then

@@ -1,0 +1,169 @@
+<!-- Creator     : groff version 1.22.2 -->
+<!-- CreationDate: Thu May 30 13:06:55 2024 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>envpack</title>
+
+</head>
+<body>
+
+<h1 align="center">envpack</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#ENVIRONNEMENT">ENVIRONNEMENT</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">envpack &minus;
+display the environment variables related to
+<b>gmkpack</b></p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>envpack</b></p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>envpack</b>
+displays the environment variables related to the use of
+<b>gmkpack</b> in the current session, as well as the
+version of gmkpack used and its path. <b><br>
+envpack</b> reminds you if you are your own pack
+administrator. This happens when the environment variables
+HOMEPACK and ROOTPACK are the same.</p>
+
+<h2>ENVIRONNEMENT
+<a name="ENVIRONNEMENT"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">ROOTPACK</p>
+
+<p style="margin-left:22%;">The default directory of
+reference packs as an alternative to
+<i>$HOME/rootpack</i></p>
+
+<p style="margin-left:11%;">HOMEPACK</p>
+
+<p style="margin-left:22%;">The default directory of user
+packs as an alternative to <i>$HOME/pack</i></p>
+
+<p style="margin-left:11%;">ROOTBIN</p>
+
+<p style="margin-left:22%;">The root directory for
+executables of all reference packs. It enables to store
+executables in another file system (larger and possibly
+semi-permanent).</p>
+
+<p style="margin-left:11%;">HOMEBIN</p>
+
+<p style="margin-left:22%;">The root directory for
+executables of all user packs. It enables to store
+executables in another file system (larger and possibly
+semi-permanent).</p>
+
+<p style="margin-left:11%;">ROOTLIB</p>
+
+<p style="margin-left:22%;">The root directory for
+libraries of all reference packs. It enables to store
+libraries in another file system (larger and permanent).</p>
+
+<p style="margin-left:11%;">HOMELIB</p>
+
+<p style="margin-left:22%;">The root directory for
+libraries of all user packs. It enables to store libraries
+in another file system (larger and permanent).</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p>GMKTMP</p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>A temporary directory. For optimal performance, it is
+recommended to use a local disk space.</p></td></tr>
+</table>
+
+<p style="margin-left:11%;">GMKFILE</p>
+
+<p style="margin-left:22%;">The basename of the
+configuration file used to run <b>gmkpack</b>. If not
+defined, the use of the option <b>-l</b> of <b>gmkpack</b>
+is mandatory.</p>
+
+<p style="margin-left:11%;">GMK_OPT</p>
+
+<p style="margin-left:22%;">The extension name of the
+configuration file used to run <b>gmkpack</b>.</p>
+
+<p style="margin-left:11%;">GMK_IMPORT_PLUGIN</p>
+
+<p style="margin-left:22%;">The external script (plug-in)
+run by <b>gmkpack</b> to import source code while creating a
+main pack.</p>
+
+<p style="margin-left:11%;">GMK_TIMER</p>
+
+<p style="margin-left:22%;">The command used to count the
+compile time of each file.</p>
+
+<p style="margin-left:11%;">GMK_SUPPORT</p>
+
+<p style="margin-left:22%;">The directory of support files
+to run <b>gmkpack</b> (wrappers, configuration files,
+external scripts).</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Ryad El Khatib
+&lt;ryad.elkhatib@meteo.fr&gt;</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>readpack(1),
+admpack(1), usrpack(1), rlspack(1), gmkpack(1),
+gmkfilemaker(1).</b></p>
+<hr>
+</body>
+</html>

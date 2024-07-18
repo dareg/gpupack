@@ -123,7 +123,14 @@ for pseudo in $(eval echo $VOBLIST_INTFB $VOBLIST_TRUE) ; do
       list=$(basename $obj .o).$LIST_EXTENSION
     fi
 #   Compile
-    echo "${CplOpts} ${ICS_ECHO_INCDIR} $branch/$file"
+    if [ $ICS_ECHO -le 2 ] ; then
+      echo "${CplOpts} ${ICS_ECHO_INCDIR} $branch/$file"
+    else
+      echo "${CplOpts} \\" > .extended_command
+      cat ${INCDIR_LIST_DBG} >> .extended_command
+      echo "$MKTOP/$branch/$file" >> .extended_command
+      cat .extended_command
+    fi     
     export GMK_CURRENT_FILE=$file
     if [ "$ext" = "F90" ] && [ $Intfb -ne 0 ] ; then
       eval $LnCmd $MKTOP/$branch/$file $base

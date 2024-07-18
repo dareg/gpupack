@@ -130,6 +130,10 @@ for binary in $(\ls -a $GMKWRKDIR 2> /dev/null | grep ^[.] | grep _link$ | cut -
 #             change the name of the file to simulate a C code source file :
               \ln -s $NEWEST_BLACKLIST dummy_c_file.c
               eval $VCCNAME -E -P -x c $BL_INCPATH dummy_c_file.c > $BLACKLIST
+#             This may even not be enough: try plain cpp instead :
+              if [ ! -s $BLACKLIST ] ; then
+                cpp -E -P -x c $BL_INCPATH dummy_c_file.c > $BLACKLIST
+              fi 
               \rm dummy_c_file.c
             else
               echo "WARNING : non-existent or empty blacklist file \"${BLACKLIST_CODE}\" in pack"

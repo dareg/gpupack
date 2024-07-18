@@ -209,6 +209,10 @@ while [ ! -f $ICS_ERROR ] && [ $ii -le $ICS_STOP ] && [ $ii -le $imax ] ; do
       cat $MyTmp/added_incdir | sed "s/^/$MODINC/" >> $MKTOP/.ghostpath.local
       echo ---------------------------------------------------------------------
       /bin/rm $MyTmp/added_incdir $MyTmp/added_incdir.su $MyTmp/existing_incdir.su
+#     Update the list formatted to extract the exact echo of the compilation line :
+      INCDIR_LIST_DBG=${INCDIR_LIST}_dbg
+      sed -e "s/^/-I/g" -e "s/$/ \\\/g" ${INCDIR_LIST} > ${INCDIR_LIST_DBG}
+      export INCDIR_LIST_DBG
     fi
   fi
 #

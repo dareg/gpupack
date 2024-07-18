@@ -142,15 +142,14 @@ if (scalar (@GMKVIEW) > 1)
     for my $prj (@INTFBLIST)
       {
         my %f;
-	find ({wanted => sub { $f{basename($File::Find::name)}++ }, no_chdir => 1}, $prj);
+	find ({wanted => sub { $f{basename($File::Find::name)}++ }, no_chdir => 1}, $prj, ".fypp/$prj");
         for my $intfb (<$GMKINTFB/$prj/*.intfb.h>)
 	  {
             my $f = basename ($intfb, qw(.intfb.h)) . '.F90';
-            my $fypp = basename ($intfb, qw(.intfb.h)) . '.fypp';
-	    $f{$f} or $f{$fypp} or do
+	    $f{$f} or do
 	      {
                 unlink ($intfb);
-		print "remove unsupported interface block $intfb\n";
+		print "remove STANDARD unsupported interface block $intfb\n";
               };
           }
       }

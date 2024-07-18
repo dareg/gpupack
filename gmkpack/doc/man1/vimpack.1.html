@@ -1,0 +1,192 @@
+<!-- Creator     : groff version 1.22.2 -->
+<!-- CreationDate: Thu May 30 13:06:57 2024 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>vimpack</title>
+
+</head>
+<body>
+
+<h1 align="center">vimpack</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#ENVIRONNEMENT">ENVIRONNEMENT</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">vimpack &minus;
+navigate and edit files within a pack</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>vimpack</b>
+<i>[ -i ] [ -d ] [filename]</i></p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><i><b>vimpack</b></i>
+is a navigator/editor for packs, based on vim. <br>
+It requires a version of vim compiled with the embedded Perl
+interpreter available in your PATH. <b><br>
+vimpack</b> enables you to navigate in the source code, edit
+files and save your modifications without caring about the
+branches of code in your pack.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>vimpack</b>
+should be run always from the root directory of a pack. <br>
+The first time you run it, <b>vimpack</b> creates an index
+file. You may create explicitely this index by running
+&rsquo;vimpack -i&rsquo; the first time you invoke
+<b>vimpack</b> ; otherwise it will be automatically created
+as soon as necessary. The creation of this index file may
+take a couple of minutes.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To edit a file,
+invoke it with <b>vimpack</b> ; For instance :</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>vimpack cnt4.F90</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">This will edit
+the last version of this file. If you modify it and save it,
+it will be saved automatically in the &rsquo;local&rsquo;
+directory of the pack. <br>
+It is possible to commit temporary edited files using the
+command :C from the editor window. Writing a temporary file
+(using :w) will automatically commit the file if it has been
+modified.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To navigate,
+move the cursor on a word and press &lt;TAB&gt;. <br>
+To go back, press &lt;BACKSPACE&gt;.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To dive
+directly from a subroutine (or a module or a defined type)
+to another one called by it (or a USE statement or a
+declaration statement), move the cursor on its name and
+press &lt;&Acirc;&sup2;&gt; or &lt;&Aring;&gt;. <br>
+If this definition is not found, then the ordinary search
+results will be displayed.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To search for a
+word, use the command :F from the editor window ; for
+instance :</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>:F MYPROC</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">The text
+research is such that : <br>
+- case are insensitive <br>
+- strings and comments are taken into acount <br>
+- keywords are searched as well</p>
+
+<p style="margin-left:11%; margin-top: 1em">If the cursor
+is over a word, this word can be looked up using &lt;TAB&gt;
+as well.</p>
+
+<p style="margin-left:11%; margin-top: 1em">When viewing a
+search result, it is possible to jump to a particular
+location : just move the cursor to a file name or a line
+number and press &lt;TAB&gt;.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To edit a file
+in &rsquo;diff&rsquo; mode (assuming this file has been
+modified in an intermediate or local pack), invoke
+<b>vimpack</b> with the option -d ; example :</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>vimpack -d cnt0.F90</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">List of
+commands from the editor window :</p>
+
+<p style="margin-left:11%; margin-top: 1em">:F
+<i>string</i> Finds all occurrences of <i>string</i> in the
+code. <br>
+:C Commit a temporary file (if modified) to src/local. <br>
+:Cq Commit to src/local (if file was modified) and exit.
+<br>
+:E <i>filename</i> Edit <i>filename</i> <br>
+:D Difference of the current file with the N-1 version. <br>
+&lt;TAB&gt; Search for the word under the cursor. <br>
+&lt;&Acirc;&sup2;&gt; Search for entity definition and dive
+to it (when possible). <br>
+&lt;&Aring;&gt; same as &lt;&Acirc;&sup2;&gt; <br>
+&lt;BACKSPACE&gt; Go back in the history. <br>
+:NF <i>newfilename</i> Edit a new file named
+<i>newfilename</i> in the directory src/local <br>
+&lt;SHIFT-TAB&gt; Same as &lt;TAB&gt; but in an new split
+window <br>
+:help vimpack On-line help</p>
+
+<h2>ENVIRONNEMENT
+<a name="ENVIRONNEMENT"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">VIMPACKVIM</p>
+
+<p style="margin-left:22%;">vim editor used. Default is
+&rsquo;vim&rsquo;. Export VIMPACKVIM=gvim if you wish to use
+the graphical interface of vim.</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Philippe
+Marguinaud &lt;philippe.marguinaud@meteo.fr&gt;</p>
+<hr>
+</body>
+</html>

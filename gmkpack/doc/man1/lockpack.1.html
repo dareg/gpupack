@@ -1,0 +1,121 @@
+<!-- Creator     : groff version 1.22.2 -->
+<!-- CreationDate: Thu May 30 13:06:55 2024 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>lockpack</title>
+
+</head>
+<body>
+
+<h1 align="center">lockpack</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#DIAGNOSTICS">DIAGNOSTICS</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">lockpack
+&minus; lock packs</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>lockpack</b>
+[ <b>-f</b> ] [ <i>pack1</i> ] [ <i>pack2</i> ] ...</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">For a single
+pack or a set of packs, <b>lockpack</b> recursively removes
+all the &quot;object&quot; files (ie with extension
+&quot;o&quot; or &quot;ok&quot;), except those which are
+used individually at linking time. The remaining files will
+have permissions changed to readonly. <br>
+This command should be run once a pack has been finalized,
+so that it will take less disk space. &quot;Locked&quot;
+packs can be considered as completely safe by end users,
+since they could not be changed later. <br>
+Arguments are optional and can be a list of packs names
+(directory) visible from the current directory. <br>
+When invoked without argument, the working directory can be
+any directory inside a pack.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em"><b>-f</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em">By default, <b>lockpack</b> asks
+for confirmation before running. Use this option to force
+the action without confirmation.</p></td></tr>
+</table>
+
+<h2>DIAGNOSTICS
+<a name="DIAGNOSTICS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This command
+will not work for an argument which does not look like a
+pack. Then the following message would be displayed : <br>
+&quot;The directory <i>target</i> does not look like a pack.
+No lock.&quot;</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Ryad El Khatib
+&lt;ryad.elkhatib@meteo.fr&gt;</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>gmkpack(1).</b></p>
+<hr>
+</body>
+</html>

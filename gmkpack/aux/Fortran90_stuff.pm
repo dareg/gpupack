@@ -781,6 +781,15 @@ CRACK:    {
         elsif(/^ABSTRACT\b/) {
           $content='ABSTRACT';
         }
+        elsif(/^ENUMERATOR\b/) {
+          $content='ENUMERATOR';
+        }
+        elsif(/^ENUM\b/) {
+          $content='ENUM';
+        }
+        elsif(/^END[ ]*+ENUM\b/) {
+          $content='END ENUM';
+        }
         elsif(/^INTERFACE\b/) {
           $content='INTERFACE';
           if(! $study_called) {
@@ -4682,8 +4691,6 @@ sub getcalls {
 #RJ: detect "998 call logmsg("..." // &" in aeolus
 #RJ: or optionally even openmp ones "!$ call ..." in content==omp
 #RJ       /^\s*CALL\s+([A-Z]\w*)/i;
-      /^[\s\d]*+CALL\s+([A-Z]\w*)/i;
-      $$calls{lc($1)}++;
 
       if (! /^[\s\d]*+CALL\s+[A-Z]\w*?\s*%/i) { # Don't add "CALL var%function" style calls
         /^[\s\d]*+CALL\s+([A-Z]\w*)/i;

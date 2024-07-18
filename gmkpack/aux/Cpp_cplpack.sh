@@ -56,7 +56,14 @@ for vob in $(cut -d "/" -f1 $1 | sort -u) ; do
       TIMEFILE=$(basename $base .$ext).${GMK_TIMEFILE_EXTENSION}
       CplOpts="$GMK_TIMER -f %e:$file -o $TIMEFILE $CplOpts"
     fi
-    echo "${CplOpts} ${ICS_ECHO_INCDIR} ${branch}/${file}"
+    if [ $ICS_ECHO -le 2 ] ; then
+      echo "${CplOpts} ${ICS_ECHO_INCDIR} $branch/$file"
+    else
+      echo "${CplOpts} \\" > .extended_command
+      cat ${INCDIR_LIST_DBG} >> .extended_command
+      echo "$MKTOP/$branch/$file" >> .extended_command
+      cat .extended_command
+    fi
     export GMK_CURRENT_FILE=$file
     \ln -s $MKTOP/$branch/$file $base
     eval $CplOpts $ICS_INCPATH $base

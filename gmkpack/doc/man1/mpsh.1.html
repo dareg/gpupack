@@ -1,0 +1,214 @@
+<!-- Creator     : groff version 1.22.2 -->
+<!-- CreationDate: Thu May 30 13:06:55 2024 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>mpshMPSH</title>
+
+</head>
+<body>
+
+<h1 align="center">mpshMPSH</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#FILES">FILES</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+<pre style="margin-left:11%;">  MPSH, MPSH_REGION, MPSH_SINGLE, MPSH_OUTPUT, MPSH_CLEAN
+  message passing shell toolbox</pre>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+<pre style="margin-left:11%; margin-top: 1em">  MPSH_REGION &lt;&lt; &rsquo;MPSH_END&rsquo;
+    echo part 1
+  MPSH_SECTION
+    echo another part
+  MPSH_SECTION
+    echo number $MPSH_SECTION
+  MPSH_END
+  ...
+  MPSH_SINGLE echo &quot;oups... forgot this one !&quot;
+  ...
+  MPSH
+  MPSH_OUTPUT</pre>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The
+<tt>&quot;mpsh&quot;</tt> set of commands defines sections
+of shell scripts to be executed simultaneously by different
+processors in a <b>batch environement</b>. Therefore these
+chunks of shell must be independent and should not defined
+environment variables that other parts of the shell could
+rely on.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The definition
+of such sections is done through a <i>here document</i>
+given to <b><small>MPSH_REGION</small></b> or through a
+<b><small>MPSH_SINGLE</small></b> instruction.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The parallel
+execution itself is achived by calling
+<b><small>MPSH</small></b> .</p>
+
+<p style="margin-left:11%; margin-top: 1em">Ordered outputs
+could be displayed through the
+<b><small>MPSH_OUTPUT</small></b> command.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Before calling
+<b><small>MPSH</small></b> , any number of
+<b><small>MPSH_SINGLE</small></b> or
+<b><small>MPSH_REGION</small></b> could occured, using the
+<i>add</i> mode of the <b><small>MPSH_REGION</small></b>
+command :</p>
+
+<pre style="margin-left:11%; margin-top: 1em">  MPSH_REGION mode:add &lt;&lt; MPSH_END
+    echo push this part to any existing job sequence if any
+  MPSH_END</pre>
+
+
+<p style="margin-left:11%; margin-top: 1em">The
+<b><small>MPSH_SINGLE</small></b> is always in the
+<i>add</i> mode.</p>
+
+<p style="margin-left:11%; margin-top: 1em">If some chunks
+of shell absolutly need to run together (but this
+information is not available when writing the script for
+example in automatic shell generation), then one could used
+the tagging mechanism to achieve such behavior:</p>
+
+<pre style="margin-left:11%; margin-top: 1em">  MPSH_REGION &lt;&lt; MPSH_END
+    echo first part
+  MPSH_SECTION tag:coolpart
+    echo here is the cool part
+  MPSH_SECTION
+    echo something else to do ?
+  MPSH_SECTION tag:coolpart
+    echo pleeeease, I wanna be cool !
+  MPSH_END</pre>
+
+
+<p style="margin-left:11%; margin-top: 1em">In that case,
+only 3 jobs will be created (and not 4).</p>
+
+<p style="margin-left:11%; margin-top: 1em">Options are
+cumulative and one could write :</p>
+
+<pre style="margin-left:11%; margin-top: 1em">  MPSH_REGION mode:add tag:fun &lt;&lt; MPSH_END
+  ...
+  MPSH_END</pre>
+
+
+<p style="margin-left:11%; margin-top: 1em">Four
+environment variables are exported in each chunk of shell :
+<b><small>MPSH_SECTION</small></b> which is the number of
+the current job, <b><small>MPSH_JOBS</small></b> which is
+the total number of jobs to proceed,
+<b><small>MPSH_NPES</small></b> which is the total number of
+processing elements, <b><small>MPSH_PEID</small></b> which
+is the current processing element id (machine
+dependent).</p>
+
+<p style="margin-left:11%; margin-top: 1em">Note that if
+<b><small>MPSH_REGION</small></b> command is used whith a
+single sequence of code ( no
+<b><small>MPSH_SECTION</small></b> inside the here document
+), and <i>all</i> mode is activated, then this sequence of
+shell is duplicated for each processor, unless the
+<i>add</i> mode is specified :</p>
+
+<pre style="margin-left:11%; margin-top: 1em">  MPSH_REGION mode:all &lt;&lt; &rsquo;MPSH_END&rsquo;
+    echo each proc should execute my shell task
+    my_task.sh $MPSH_SECTION
+  MPSH_END</pre>
+
+
+<p style="margin-left:11%; margin-top: 1em">Another feature
+of the <b><small>MPSH_REGION</small></b> or
+<b><small>MPSH_SECTION</small></b> command is the loop
+mechanism :</p>
+
+<pre style="margin-left:11%; margin-top: 1em">  MPSH_REGION loop:001-008-2,foo,bar &lt;&lt; &rsquo;MPSH_END&rsquo;
+    echo this is loop index $MPSH_INDEX
+  MPSH_END</pre>
+
+
+<p style="margin-left:11%; margin-top: 1em">... will
+produce 6 iterations, with associated indexes
+&quot;001&quot;, &quot;003&quot;, &quot;005&quot;,
+&quot;007&quot;, &quot;foo&quot; and &quot;bar&quot;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><small>MPSH</small>
+command are self-protected, ie : <small>MPSH_REGION</small>
+is ignored inside an other <small>MPSH_REGION</small> ( as
+well as matching MPSH_SECTIONs ).</p>
+
+<p style="margin-left:11%; margin-top: 1em">The estimate
+overhead of using mpsh is 2 seconds...</p>
+
+<h2>EXAMPLES
+<a name="EXAMPLES"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">See
+<i>/usr/local/mpsh/examples</i> directory.</p>
+
+<h2>FILES
+<a name="FILES"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em">/usr/local/mpsh/bin
+<br>
+Path to add to the <small>PATH</small> variable.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em">/usr/local/mpsh/examples
+<br>
+Some examples for each functionality of the toolbox.</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em">eric.sevault@meteo.fr
+( <small>CNRM/GMAP/ALGO</small> &minus; 84 71 )</p>
+
+<p style="margin-left:11%; margin-top: 1em">many thanks to
+: <br>
+pascal.lamboley@meteo.fr ( <small>DP/PREVI/COMPAS</small> )
+<br>
+ryad.elkhatib@meteo.fr( <small>CNRM/GMAP/ALGO</small> ).</p>
+<hr>
+</body>
+</html>

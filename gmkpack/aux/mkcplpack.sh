@@ -449,6 +449,10 @@ if [ -s packlist ] ; then
         mkdir -p $dir
       fi
     done
+#   A list formatted to extract the exact echo of the compilation line :
+    INCDIR_LIST_DBG=${INCDIR_LIST}_dbg
+    sed -e "s/^/-I/g" -e "s/$/ \\\/g" ${INCDIR_LIST} > ${INCDIR_LIST_DBG}
+    export INCDIR_LIST_DBG
   fi
 
 # Compile everything :

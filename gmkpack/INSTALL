@@ -50,13 +50,6 @@
    assistant at once or later (see next paragraph). For now, let's do it later.
    - Update the environment variables in your profile and your current session,
    as recommended (PATH and MANPATH).
-   If you have libemos, then it contains both gribex and bufr; otherwise, you
-   must have separate libgribex and libbufr. 
-
-   Note that For Meteo-France applications : 
-   - fdb is not required 
-   - dummy libraries from the auxlibs package may be used
-   - CANARI support must be enabled
 
 3. Setup your architecture file : 
    

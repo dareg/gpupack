@@ -51,7 +51,14 @@ for vob in $(cut -d "/" -f1 $1 | sort -u) ; do
   CplOpts="$FLAGS $(env | grep "^${OPTVOB}=" | cut -d"=" -f2-)"
   for file in $(grep "^${vob}/" $1) ; do
     base=$(basename $file)
-    echo "${CplOpts} ${ICS_ECHO_INCDIR} ${branch}/${file}"
+    if [ $ICS_ECHO -le 2 ] ; then
+      echo "${CplOpts} ${ICS_ECHO_INCDIR} $branch/$file"
+    else
+      echo "${CplOpts} \\" > .extended_command
+      cat ${INCDIR_LIST_DBG} >> .extended_command
+      echo "$MKTOP/$branch/$file" >> .extended_command
+      cat .extended_command
+    fi
     export GMK_CURRENT_FILE=$file
     \ln -s $MKTOP/$branch/$file $base
     $CplOpts $ICS_INCPATH $base

@@ -362,21 +362,23 @@ for file in man/man1/*.1 ; do
   tbl $file | nroff -man | col > man/cat1/$(basename $file)
 done
 
+# todo : man -t gmkpack > gmkpack.ps
+
 echo Convert man pages into html :
 #    ---------------------------
 
 if [ "$(uname)" = "Darwin" ] ; then
-  type man2html >/dev/null 2>&1
+  type groff >/dev/null 2>&1
   ii=$?
 else
-  which man2html >/dev/null 2>&1
+  which groff >/dev/null 2>&1
   ii=$?
 fi
-if [ $ii -eq 0 ] ; then
+if [ $ii -eq 0 ] && [ -s /usr/share/groff/current/font/devhtml/DESC ] ; then
   mkdir -p doc/man1
   cd man/man1
   for file in * ; do
-    man2html < $file > ../../doc/man1/${file}.html
+    cat $file | groff -mandoc -Thtml > ../../doc/man1/${file}.html
   done
   cd ../..
   cd doc
@@ -423,7 +425,7 @@ documentation</a><br>
 EOF
   cd ..
 else
-  echo No man2html convertor in PATH.
+  echo No working groff convertor for html.
 fi
 
 if [ $THREAD_TEST -eq 0 ] ; then

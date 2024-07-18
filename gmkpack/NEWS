@@ -2,6 +2,35 @@
 GMKPACK NEWS :
 ============
 
+Changes in version 6.9.10 :
+------------------------
+- Add lapack/blas to link PREP (Gelato needs them)
+
+Changes in version 6.9.9 :
+------------------------
+- fix a bug in Fortran90_stuff.pm which caused calls like "call foo%etc" not to be discarded for the auto-generated
+  interfaces research
+- support for f2003 feature ENUM
+- fix a bug in the update of auto-generated interfaces made from fypp files or .hypp templates
+- in the compilation script, ICS_ECHO=3 now displays the full compilation lines, except for .sql files. This
+  should help to fix compilers failures.
+- re-enable html pages from man pages with groff
+- minor cleanings
+
+Changes in version 6.9.8 :
+------------------------
+- Fallback to cpp if mpicc not able to act like a simple cpp (issue with blacklist)
+- minor cleaning
+
+Changes in version 6.9.7 :
+------------------------
+- Support for Field_api
+- portability fix : dummy C files calling printf needs #include <stdio.h>
+- add option -DENABLE_DUMMY_MPI_HEADER=OFF for Fiat library in gmkfile templates
+- Fix deduction of ctest name and path from cmake name and path
+- Fix : replace asl_sequential by asl_openmp in NEC Aurora file template
+- Speedup a bit the build of dummy libraries
+
 Changes in version 6.9.6 :
 ------------------------
 - fix a regression with complex dependencies
